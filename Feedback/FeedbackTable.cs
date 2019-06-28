@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
-using judge_c_sharp.Util;
+using judge_csharp.Util;
 
-namespace judge_c_sharp.Feedback
+namespace judge_csharp.Feedback
 {
     public class FeedbackTable : Group<Tab>
     {

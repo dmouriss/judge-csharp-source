@@ -1,38 +1,24 @@
 ﻿using System;
-using judge_c_sharp.Feedback;
+using judge_csharp.Feedback;
 using System.Xml;
 using System.IO;
-using judge_c_sharp.Json;
+using judge_csharp.Json;
 using System.Linq;
+using System.Collections.Generic;
 
-namespace judge_c_sharp.EventHandling
+namespace judge_csharp.EventHandling
 {
     public class OutputHandler
     {
         private readonly TextWriter OutputChannel;
+        private readonly Dictionary<string, Status> ResultMap;
 
         public OutputHandler(TextWriter outputChannel)
         {
             OutputChannel = outputChannel;
-        }
-
-        private Tuple<string, string, string> ProcessTestResult(string testresultmessage)
-        {
-            string expected = "";
-            string generated = "";
-            string message = "";
-
-            string[] lines = testresultmessage.Split('\n');
-            if (lines[lines.Length - 2].Trim().StartsWith("Expected:", StringComparison.Ordinal) && lines[lines.Length - 1].Trim().StartsWith("But was:", StringComparison.Ordinal))
-            {
-                expected = lines[lines.Length - 2].Trim().Substring("Expected:".Length).Trim();
-                generated = lines[lines.Length - 1].Trim().Substring("Expected:".Length).Trim();
-                message = string.Join("\n", lines.Take(lines.Length - 2));
-            } else
-            {
-                message = testresultmessage.Trim();
-            }
-            return new Tuple<string, string, string>(expected, generated, message);
+            ResultMap = new Dictionary<string, Status>();
+            ResultMap.Add("Passed", Status.CORRECT);
+            ResultMap.Add("Failed", Status.WRONG);
         }
 
         public bool Handle(string report)
@@ -63,33 +49,36 @@ namespace judge_c_sharp.EventHandling
                     OutputChannel.WriteLine(JSONGenerator.StartTestcase(testcaseDescription));
                     break;
                 case "test-case":
-                    string testresult = node.Attributes["result"].Value;
-                    if (testresult == "Passed") /* correct test */
-                    {
-                        OutputChannel.WriteLine(JSONGenerator.StartTest(""));
-                        OutputChannel.WriteLine(JSONGenerator.CloseTest(Status.CORRECT, ""));
-                    }
-                    else if (node.SelectNodes("assertions").Count == 0) /* runtime error */
+                    if (node.SelectNodes("assertions").Count == 0) /* runtime error */
                     {
                         string messagetext = node.SelectSingleNode("failure/message").ChildNodes[0].Value;
                         OutputChannel.WriteLine(JSONGenerator.StartTest(""));
                         OutputChannel.WriteLine(JSONGenerator.AppendMessage(Format.PLAIN, messagetext));
                         OutputChannel.WriteLine(JSONGenerator.CloseTest(Status.RUNTIME_ERROR, ""));
                     }
-                    else /* wrong answer */
+                    else
                     {
-                        foreach (XmlNode assertion in node.SelectSingleNode("assertions").SelectNodes("assertion[@result='Failed']"))
+                        foreach (XmlNode assertion in node.SelectSingleNode("assertions"))
                         {
-                            string testresultmessage = assertion.SelectSingleNode("message").ChildNodes[0].Value.Trim();
-                            Tuple<string, string, string> processedTestresult = ProcessTestResult(testresultmessage);
-                            string expected = processedTestresult.Item1;
-                            string generated = processedTestresult.Item2;
-                            string message = processedTestresult.Item3;
+                            string testresult = assertion.Attributes["result"].Value;
+                            string expected = "";
+                            string generated = "";
+                            string message = "";
+                            if (assertion.SelectNodes("actual").Count != 0 && assertion.SelectNodes("expected").Count != 0 )
+                            {
+                                expected = assertion.SelectSingleNode("expected").ChildNodes[0].Value.Trim();
+                                generated = assertion.SelectSingleNode("actual").ChildNodes[0].Value.Trim();
+                            }
+                            if (assertion.SelectNodes("message").Count != 0 )
+                                message = assertion.SelectSingleNode("message").ChildNodes[0].Value.Trim();
 
-                            OutputChannel.WriteLine(JSONGenerator.StartTest(expected));
-                            if (message.Length != 0)
-                                OutputChannel.WriteLine(JSONGenerator.AppendMessage(Format.PLAIN, message));
-                            OutputChannel.WriteLine(JSONGenerator.CloseTest(Status.WRONG, generated));
+                            if (generated != "" || expected != "" || message != "" )
+                            {
+                                OutputChannel.WriteLine(JSONGenerator.StartTest(expected));
+                                if (message.Length != 0)
+                                    OutputChannel.WriteLine(JSONGenerator.AppendMessage(Format.PLAIN, message));
+                                OutputChannel.WriteLine(JSONGenerator.CloseTest(ResultMap[testresult], generated));
+                            }
                         }
                     }
                     OutputChannel.WriteLine(JSONGenerator.CloseTestcase());

@@ -1,5 +1,5 @@
 ﻿using System;
-namespace judge_c_sharp.Util
+namespace judge_csharp.Util
 {
     public static class TextUtil
     {

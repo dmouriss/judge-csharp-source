@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace judge_c_sharp.Feedback
+namespace judge_csharp.Feedback
 {
     public class Test
     {

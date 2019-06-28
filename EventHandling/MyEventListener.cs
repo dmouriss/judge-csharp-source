@@ -4,7 +4,7 @@ using NUnit.Engine;
 using NUnit.Engine.Extensibility;
 
 
-namespace judge_c_sharp.EventHandling
+namespace judge_csharp.EventHandling
 {
     [Extension(EngineVersion = "3.4")]
     public class MyEventListener : ITestEventListener

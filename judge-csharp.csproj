@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <RootNamespace>judge_c_sharp</RootNamespace>
+    <Configuration>Release</Configuration>
+    <RootNamespace>judge_csharp</RootNamespace>
     <TargetFramework>net40</TargetFramework>
   </PropertyGroup>
   <ItemGroup>

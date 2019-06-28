@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace judge_c_sharp.Json
+namespace judge_csharp.Json
 {
     public static class JSONGenerator
     {

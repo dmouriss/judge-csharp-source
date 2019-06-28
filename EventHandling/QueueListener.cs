@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 
-namespace judge_c_sharp.EventHandling
+namespace judge_csharp.EventHandling
 {
     public class QueueListener
     {

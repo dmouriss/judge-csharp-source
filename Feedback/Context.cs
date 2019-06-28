@@ -1,5 +1,5 @@
 ﻿using System;
-namespace judge_c_sharp.Feedback
+namespace judge_csharp.Feedback
 {
     public class Context : Group<TestCase>
     {

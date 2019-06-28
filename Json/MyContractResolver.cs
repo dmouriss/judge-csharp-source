@@ -5,7 +5,7 @@ using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace judge_c_sharp.Json
+namespace judge_csharp.Json
 {
     public class MyContractResolver : Newtonsoft.Json.Serialization.DefaultContractResolver
     {

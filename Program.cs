@@ -2,10 +2,10 @@ using System;
 using System.Collections.Concurrent;
 using System.IO;
 using System.Threading;
-using judge_c_sharp.EventHandling;
+using judge_csharp.EventHandling;
 using NUnit.Engine;
 
-namespace judge_c_sharp
+namespace judge_csharp
 {
 
     public class NUnitJson
