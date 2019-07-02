@@ -58,13 +58,25 @@ namespace judge_csharp.Json
         public static string StartTestcase(string description)
         {
             Dictionary<string, object> content = GetCommandDict("start-testcase");
-            content.Add("description", description);
+            Dictionary<string, object> descriptionobject = new Dictionary<string, object>
+            {
+                { "format", "html" },
+                { "description", "<span class=\"code\">" + description + "</span>" }
+            };
+            content.Add("description", descriptionobject);
             return JsonConvert.SerializeObject(content);
         }
 
         public static string CloseTestcase()
         {
             Dictionary<string, object> content = GetCommandDict("close-testcase");
+            return JsonConvert.SerializeObject(content);
+        }
+
+        public static string CloseFailedTestcase()
+        {
+            Dictionary<string, object> content = GetCommandDict("close-testcase");
+            content.Add("accepted", false);
             return JsonConvert.SerializeObject(content);
         }
 
@@ -99,6 +111,18 @@ namespace judge_csharp.Json
             };
 
             content.Add("message", message);
+            return JsonConvert.SerializeObject(content);
+        }
+
+        public static string EscalateStatus(Feedback.Status status)
+        {
+            Dictionary<string, object> content = GetCommandDict("escalate-status");
+            Dictionary<string, object> statusEnum = new Dictionary<string, object>
+            {
+                { "enum", status }
+            };
+
+            content.Add("status", statusEnum);
             return JsonConvert.SerializeObject(content);
         }
     }

@@ -44,17 +44,22 @@ namespace judge_csharp.EventHandling
                     }
                     break;
                 case "start-test":
-                    string testcaseDescription = node.Attributes["name"].Value;
                     OutputChannel.WriteLine(JSONGenerator.StartContext());
-                    OutputChannel.WriteLine(JSONGenerator.StartTestcase(testcaseDescription));
+
+                    string testcaseDescription = node.Attributes["name"].Value;
+
+                    if ( node.SelectNodes("stdin").Count == 0)
+                        OutputChannel.WriteLine(JSONGenerator.StartTestcase(testcaseDescription));
+                    else
+                        OutputChannel.WriteLine(JSONGenerator.StartTestcase(node.SelectSingleNode("stdin").ChildNodes[0].Value.Trim()));
                     break;
                 case "test-case":
                     if (node.SelectNodes("assertions").Count == 0) /* runtime error */
                     {
                         string messagetext = node.SelectSingleNode("failure/message").ChildNodes[0].Value;
-                        OutputChannel.WriteLine(JSONGenerator.StartTest(""));
                         OutputChannel.WriteLine(JSONGenerator.AppendMessage(Format.PLAIN, messagetext));
-                        OutputChannel.WriteLine(JSONGenerator.CloseTest(Status.RUNTIME_ERROR, ""));
+                        OutputChannel.WriteLine(JSONGenerator.EscalateStatus(Status.RUNTIME_ERROR));
+                        OutputChannel.WriteLine(JSONGenerator.CloseFailedTestcase());
                     }
                     else
                     {
@@ -80,8 +85,8 @@ namespace judge_csharp.EventHandling
                                 OutputChannel.WriteLine(JSONGenerator.CloseTest(ResultMap[testresult], generated));
                             }
                         }
+                        OutputChannel.WriteLine(JSONGenerator.CloseTestcase());
                     }
-                    OutputChannel.WriteLine(JSONGenerator.CloseTestcase());
                     OutputChannel.WriteLine(JSONGenerator.CloseContext());
                     break;
                 case "test-suite":
