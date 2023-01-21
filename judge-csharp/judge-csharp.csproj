@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <Configuration>Release</Configuration>
+    <RootNamespace>judge_csharp</RootNamespace>
+    <TargetFramework>net40</TargetFramework>
+  </PropertyGroup>
+     <PropertyGroup>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="NUnit.Engine" Version="3.10.0" />
+  </ItemGroup>
+</Project>

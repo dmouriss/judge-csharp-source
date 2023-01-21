@@ -1,0 +1,32 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 25.0.1704.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "judge-csharp", "judge-csharp\judge-csharp.csproj", "{34B1BC6F-7046-43ED-9C8A-29E618AB99E1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{069AC0A6-91E4-4218-B485-E9A2036388DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{069AC0A6-91E4-4218-B485-E9A2036388DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{069AC0A6-91E4-4218-B485-E9A2036388DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{069AC0A6-91E4-4218-B485-E9A2036388DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34B1BC6F-7046-43ED-9C8A-29E618AB99E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34B1BC6F-7046-43ED-9C8A-29E618AB99E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34B1BC6F-7046-43ED-9C8A-29E618AB99E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34B1BC6F-7046-43ED-9C8A-29E618AB99E1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D608F001-5F41-4A0B-803B-02E69BF8FF45}
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		BaseDirectory = judge-csharp
+	EndGlobalSection
+EndGlobal
